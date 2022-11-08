@@ -14,3 +14,11 @@
 .underline{
     border-bottom: 1px solid #d3d1d1;
 }
+
+.pointer{
+    cursor: pointer;
+}
+
+.pointer:hover{
+    background-color: #d9d7d7;
+}

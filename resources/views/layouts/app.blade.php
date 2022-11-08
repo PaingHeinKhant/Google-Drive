@@ -23,11 +23,11 @@
                 @include('layouts.nav')
                 <div class="container-fluid ">
                     <div class="row d-flex justify-content-between">
-                        <div class=" col-3 col-md-3 col-lg-2  sidebar p-0">
+                        <div class=" col-2 col-md-3 col-lg-2  sidebar p-0">
                             @include('layouts.sidebar')
                         </div>
-                        <div class="p-0 col-9 col-md-9 col-lg-10">
-                            <div class="m-5 p-0 ">
+                        <div class="p-0 col-10 col-md-9 col-lg-10">
+                            <div class="m-2 p-0 ">
                                 @yield('content')
                             </div>
                         </div>
