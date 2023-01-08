@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FileController;
+use App\Http\Controllers\FolderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,5 +24,13 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
-Route::resource('/file',FileController::class);
-Route::resource('/folder',\App\Http\Controllers\FolderController::class);
+Route::middleware('auth')->group(function (){
+    Route::resource('/file',FileController::class);
+    Route::resource('/folder',\App\Http\Controllers\FolderController::class);
+    Route::resource('/inputFolder',\App\Http\Controllers\InputFolderController::class);
+
+    Route::get('/trash',[FolderController::class,'trash'])->name('trash');
+//    Route::get('/trash',[FolderController::class,'trash'])->name('trash');
+    Route::get('/restore/{id}',[FolderController::class,'restore'])->name('restore');
+});
+

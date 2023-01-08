@@ -39,14 +39,12 @@ class FileController extends Controller
      */
     public function store(StoreFileRequest $request)
     {
-//        dd($request->photos[0]->getClientOriginalName());
-
-        dd($request->photos);
-
+//        return $request;
 
         if($request->hasFile('filename')) {
             $file = new File();
             $file->name = $request->filename;
+//            $file->originalName = $request->originalName;
             $file->save();
 
             foreach ($request->filename as $key=>$file){
@@ -58,8 +56,11 @@ class FileController extends Controller
                     "extension" => $file->extension(),
                     "name" => $newName,
                     "folder_id" => $request->folder_id,
+                    "file_id" => $request->folder_id,
                     "user_id" =>Auth::id(),
-                    "originalName" => $request->file->getClientOriginalName(),
+                    "originalName" => $file->getClientOriginalName(),
+
+
                 ];
             }
             File::insert($savedFile);
@@ -73,16 +74,17 @@ class FileController extends Controller
                 $savedPhotos[$key] = [
                     "extension" => $photo->extension(),
                     "folder_id" => $request->folder_id,
+                    "file_id" => $request->folder_id,
                     "user_id" =>Auth::id(),
                     "name" => $newName,
-                    "originalName" => $photo,
+                    "originalName" => $photo->getClientOriginalName(),
                 ];
             }
             File::insert($savedPhotos);
         }
+
+
         return redirect()->back();
-
-
     }
 
     /**
@@ -116,7 +118,11 @@ class FileController extends Controller
      */
     public function update(UpdateFileRequest $request, File $file)
     {
-        //
+
+//        return $request;
+        $file->originalName = $request->filename;
+
+        return redirect()->back();
     }
 
     /**
@@ -127,6 +133,7 @@ class FileController extends Controller
      */
     public function destroy(File $file)
     {
-        //
+        $file->delete();
+        return redirect()->back();
     }
 }

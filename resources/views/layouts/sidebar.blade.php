@@ -1,42 +1,42 @@
 <div class="sidebar">
 
-{{--    <div class="dropdown">--}}
-{{--        <div class=" rounded my-3 mx-4 py-2 px-4 rounded-pill ">--}}
-{{--            <a class="list-group-item list-group-item-action d-flex align-items-center ps-3 shadow px-2" href="#">--}}
-{{--                <i class="bi bi-plus fs-1"></i>--}}
-{{--                <span class="h5 fw-bold m-0 p-0 letter-spacing">Create</span>--}}
-{{--            </a>--}}
-{{--        </div>--}}
-{{--        <div class="dropdown-menu border-0 shadow py-2 px-1">--}}
-{{--            <a class="list-group-item list-group-item-action border-0 rounded py-1 px-2  show ps-3 mb-3" href="">--}}
-{{--                <i class="bi bi-printer fs-6 me-1"></i>--}}
-{{--                <span class="my-1">Print</span>--}}
-{{--            </a>--}}
+    <div class="dropdown">
+        <button class=" border-0 bg-light dropdown-toggle rounded my-3 mx-5 py-2 px-4 rounded-pill d-flex align-items-center  ps-3 shadow px-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="bi bi-plus fs-1"></i>
+            <span class="h5 fw-bold m-0 p-0 letter-spacing">Create</span>
+        </button>
+        <div class="dropdown-menu border-0 shadow rounded-3">
+            <a class="list-group-item list-group-item-action border-0 rounded btn-rounded px-4 py-1  my-1" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                <i class="bi bi-folder fs-4 me-3 "></i>
+                <span class="h6 my-1">New Folder</span>
+            </a>
 
-{{--            <a class="list-group-item list-group-item-action border-0 rounded py-1 px-2 show ps-3 mb-3" href="">--}}
-{{--                <i class="bi bi-archive fs-6 me-1"></i>--}}
-{{--                <span class=" my-1">Hide From Contact</span>--}}
-{{--            </a>--}}
-{{--        </div>--}}
-{{--    </div>--}}
+            <a class="list-group-item list-group-item-action border-0 rounded btn-rounded px-4 py-1 my-1 " id="inputFileClick">
+                <i class="bi bi-file-earmark-plus fs-4 me-3 "></i>
+                <span class="h6 my-1">File Upload</span>
+            </a>
+
+            <form action="{{route('file.store')}}" id="submitForm" method="post" enctype="multipart/form-data">
+                @csrf
+                <input type="file" class="form-control" name="photos[]" id="fileInput" multiple hidden>
+            </form>
+
+
+            <form action="{{route('file.store')}}" id="submitForm" method="post" enctype="multipart/form-data">
+                @csrf
+                <input type="text" class="folderName" name="folder_name"  hidden>
+                <input type="file" class="form-control"   multiple hidden>
+                <button class="list-group-item list-group-item-action border-0 rounded btn-rounded mx-2 my-1 " id="inputFilClick">
+                    <i class="bi bi-folder fs-4 me-3 "></i>
+                    <span class="h6 my-1">Folder Upload</span>
+                </button>
+            </form>
+        </div>
+    </div>
 
 
 
     <div class="list-group mb-3 underline">
-        <a class="list-group-item list-group-item-action border-0 rounded btn-rounded ps-5" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-            <i class="bi bi-folder fs-4 me-3 "></i>
-            <span class="h6 my-1">New Folder</span>
-        </a>
-
-        <a class="list-group-item list-group-item-action border-0 rounded btn-rounded ps-5 " id="inputFileClick">
-            <i class="bi bi-file-earmark-plus fs-4 me-3 "></i>
-            <span class="h6 my-1">File Upload</span>
-        </a>
-
-        <a class="list-group-item list-group-item-action border-0 rounded btn-rounded ps-5 " id="folder">
-            <i class="bi bi-folder fs-4 me-3 "></i>
-            <span class="h6 my-1">Folder Upload</span>
-        </a>
         <a class="list-group-item list-group-item-action border-0 rounded btn-rounded ps-5 " href="{{route('folder.index')}}">
             <i class="bi bi-hdd fs-4 me-3 "></i>
             <span class="h6 my-1">My drive</span>
@@ -91,7 +91,7 @@
             <div class="modal-body">
                 <form method="post" action="{{route('folder.store')}}">
                     @csrf
-                        <input type="text" value="Untitled Folder" name="folderName" class="form-control">
+                        <input type="text" placeholder="Untitled Folder" name="folderName" class="form-control" required>
                     <div class="my-2 d-flex justify-content-end">
                         <div class=""></div>
                         <div class="my-3">
@@ -105,8 +105,6 @@
     </div>
 </div>
 
-<form action="{{route('file.store')}}" id="submitForm" method="post" enctype="multipart/form-data">
-    @csrf
-    <input type="file" class="form-control" name="photos[]" id="fileInput" multiple hidden>
-</form>
+
+
 

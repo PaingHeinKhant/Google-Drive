@@ -22,3 +22,27 @@
 .pointer:hover{
     background-color: #d9d7d7;
 }
+.position{
+    z-index: 20;
+    position: absolute;
+    top: 25px !important;
+    right: 20px!important;
+}
+
+.position-file{
+    z-index: 20;
+    position: absolute;
+    top: 160px !important;
+    right: 20px!important;
+}
+
+.relative {
+    position: relative;
+}
+.absolute {
+    position: absolute;
+}
+.hidden {
+    /* The menu is hidden at first */
+    display: none;
+}

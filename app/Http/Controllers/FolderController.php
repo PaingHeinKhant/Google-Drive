@@ -19,8 +19,9 @@ class FolderController extends Controller
     {
 //        $file_id = Folder::all();
         $folders = Folder::where('file_id', null)->get();
+        $files = File::where('file_id', null)->get();
 //        $folders = Folder::all();
-        $files = File::all();
+//        $files = File::all();
         return view('folder.index',compact(['folders','files']));
     }
 
@@ -70,8 +71,9 @@ class FolderController extends Controller
     {
 //        return $folder;
         $datas = Folder::where('file_id',$folder->id)->get();
+        $files = File::where('file_id',$folder->id)->get();
 
-        return view('folder.show',compact(['folder','datas']));
+        return view('folder.show',compact(['folder','datas','files']));
     }
 
     /**
@@ -94,7 +96,17 @@ class FolderController extends Controller
      */
     public function update(UpdateFolderRequest $request, Folder $folder)
     {
-        //
+//        return $request;
+        $folder->folderName	= $request->folderName;
+        $folder->user_id = Auth::id();
+
+        if ($request->file_id != null ){
+            $folder->file_id = $request->file_id;
+        }
+
+        $folder->update();
+        return redirect()->back();
+
     }
 
     /**
@@ -103,8 +115,30 @@ class FolderController extends Controller
      * @param  \App\Models\Folder  $folder
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Folder $folder)
+    public function destroy($id)
     {
-        //
+//        return $id;
+        $folder = Folder::where('user_id',Auth::id())->withTrashed()->findOrFail($id);
+
+        //forceDelete
+        if ($folder->trashed()){
+            $folder->forceDelete();
+        }
+
+        //softDelete
+        $folder->delete();
+        return redirect()->back();
+    }
+
+    public function restore($id){
+        $folder = Folder::onlyTrashed()->fineOrFail($id);
+
+        $folder->restore();
+        return redirect()->back();
+    }
+
+    public function trash(){
+        $folders = Folder::onlyTrashed()->get();
+        return view('folder.trash',compact('folders'));
     }
 }
